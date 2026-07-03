@@ -1,0 +1,22 @@
+[
+    {
+        "version": "1.0.1",
+        "date": "2026-07-03",
+        "downloadUrl": "https://github.com/butterkookies/VerdiTech/releases/download/v1.0.1/app-release.apk",
+        "notes": [
+            "Fixed minor UI glitches on the home screen.",
+            "Improved performance for offline mode.",
+            "Added new animations matching the light green theme."
+        ]
+    },
+    {
+        "version": "1.0.0",
+        "date": "2026-06-25",
+        "downloadUrl": "https://github.com/butterkookies/VerdiTech/releases/download/v1.0.0/app-release.apk",
+        "notes": [
+            "Initial public release of VerdiTech.",
+            "Core features including dashboard, plant health monitoring.",
+            "Dark and light mode support."
+        ]
+    }
+]
