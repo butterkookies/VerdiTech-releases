@@ -37,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${notesHtml}
                         </ul>
                     </div>
-                    <a href="${release.downloadUrl}" class="download-btn" target="_blank" rel="noopener noreferrer">Download APK</a>
-                    
-
+                    <a href="${release.downloadUrl}" class="download-btn" download="VerdiTech-v${release.version}.apk">Download APK</a>
                 `;
                 
                 container.appendChild(card);
