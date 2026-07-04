@@ -1,12 +1,13 @@
 [
     {
-        "version": "0.6.1",
+        "version": "0.6.2",
         "date": "2026-07-04",
-        "downloadUrl": "verditech_v0.6.1.apk",
+        "downloadUrl": "verditech_v0.6.2.apk",
         "notes": [
-            "UI Proportion & Layout Refinements.",
-            "Reduced vertical height of PlantCard to eliminate excess whitespace.",
-            "Redesigned the Confirm forecast step to split plant details and CA engine forecast."
+            "Fixed dark theme override causing Log Today buttons to appear dark green.",
+            "Integrated localized Philippine agricultural plant care guidelines.",
+            "Enhanced dynamic plant health ring scaling and fixed alignment.",
+            "Enforced bright green primary color for UI elements."
         ]
     }
 ]
