@@ -1,5 +1,15 @@
 [
     {
+        "version": "0.6.1",
+        "date": "2026-07-04",
+        "downloadUrl": "verditech_v0.6.1.apk",
+        "notes": [
+            "UI Proportion & Layout Refinements.",
+            "Reduced vertical height of PlantCard to eliminate excess whitespace.",
+            "Redesigned the Confirm forecast step to split plant details and CA engine forecast."
+        ]
+    },
+    {
         "version": "1.0.1",
         "date": "2026-07-03",
         "downloadUrl": "https://github.com/butterkookies/VerdiTech/releases/download/v1.0.1/app-release.apk",
