@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerdiTech - Demographics Dashboard</title>
+    <!-- Google Fonts Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-leaf brand-logo"></i>
+                <h2>VerdiTech</h2>
+            </div>
+            <nav class="menu">
+                <a href="../" class="menu-item">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to Releases</span>
+                </a>
+                <a href="#" class="menu-item active">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#table-section" class="menu-item">
+                    <i class="fa-solid fa-table"></i>
+                    <span>Raw Data</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 VerdiTech Research</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1>Research Dashboard</h1>
+                    <p>Demographic profile analysis & respondent monitoring</p>
+                </div>
+                <!-- API Config Card -->
+                <div class="api-config">
+                    <div class="input-group">
+                        <input type="text" id="api-url-input" placeholder="Enter Google Apps Script URL...">
+                        <button id="btn-save-api" class="btn"><i class="fa-solid fa-save"></i> Connect</button>
+                    </div>
+                    <span id="api-status" class="status-badge status-offline">Mock Data Mode</span>
+                </div>
+            </header>
+
+            <!-- Overview Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Respondents</h3>
+                        <p id="total-respondents">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-green">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Students</h3>
+                        <p id="student-count">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-yellow">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Experienced Gardeners</h3>
+                        <p id="gardener-count">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-grid">
+                <!-- Age & Gender -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Age Distribution</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Gender Ratio</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Occupation & Experience -->
+                <div class="chart-card card-wide">
+                    <div class="chart-header">
+                        <h3>Occupation Breakdown</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="occupationChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Gardening Experience</h3>
+                    </div>
+                    <div class="chart-body font-adjusted">
+                        <canvas id="experienceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="chart-card card-full">
+                    <div class="chart-header">
+                        <h3>Educational Attainment</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="educationChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table Section -->
+            <section id="table-section" class="table-card">
+                <div class="table-header">
+                    <h2>Respondent Log Records</h2>
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="Search respondents...">
+                        </div>
+                        <button id="btn-refresh" class="btn btn-secondary"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                    </div>
+                </div>
+                <div class="table-body">
+                    <table id="records-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Name</th>
+                                <th>Age Range</th>
+                                <th>Sex</th>
+                                <th>Occupation</th>
+                                <th>Experience</th>
+                                <th>Education</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-content">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
