@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gardenerCountTxt = document.getElementById("gardener-count");
 
     // Load API URL
-    let apiUrl = localStorage.getItem("verditech_api_url") || "";
+    let apiUrl = localStorage.getItem("verditech_api_url") || "https://script.google.com/macros/s/AKfycbwTVgjqFZ4tCjQXu5F7cbUpM8qd6Nmtll0svbXXKPogWU88-RYt1E5PcZYtprZO0X9y/exec";
     apiInput.value = apiUrl;
 
     // Charts Reference List
