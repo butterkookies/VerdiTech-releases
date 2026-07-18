@@ -1,5 +1,15 @@
 [
     {
+        "version": "0.6.3",
+        "date": "2026-07-18",
+        "downloadUrl": "verditech_v0.6.3.apk",
+        "notes": [
+            "Introduced brand new custom Figma app icon.",
+            "Visual enhancements and scaling tweaks for CA Simulator graphics.",
+            "Refined Plant Card layout and updated Timeline Slider behavior."
+        ]
+    },
+    {
         "version": "0.6.2",
         "date": "2026-07-04",
         "downloadUrl": "verditech_v0.6.2.apk",
