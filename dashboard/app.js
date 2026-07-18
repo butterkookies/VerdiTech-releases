@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveApiBtn = document.getElementById("btn-save-api");
     const apiStatus = document.getElementById("api-status");
     const refreshBtn = document.getElementById("btn-refresh");
+    const generatePdfBtn = document.getElementById("btn-generate-pdf");
     const searchInput = document.getElementById("search-input");
     const tableBody = document.getElementById("table-body-content");
 
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeData = [...mockData];
 
-    // Chart Palette (Tailored Greens & Slate)
+    // Chart Palette (Tailored Greens & Slate for Light Theme)
     const emeraldPalette = {
         primary: '#10B981',
         secondary: '#34D399',
@@ -47,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
         accent3: '#EC4899',
         accent4: '#8B5CF6',
         slateLight: '#374151',
-        gridLine: 'rgba(255, 255, 255, 0.05)',
-        text: '#9CA3AF'
+        gridLine: '#E5E7EB',
+        text: '#374151'
     };
 
     // Save API Webhook URL
@@ -311,6 +312,141 @@ document.addEventListener("DOMContentLoaded", () => {
                   .replace(/>/g, "&gt;")
                   .replace(/"/g, "&quot;")
                   .replace(/'/g, "&#039;");
+    }
+
+    // PDF Generation
+    if (generatePdfBtn) {
+        generatePdfBtn.addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // --- Helper: Draw Native Bar Chart ---
+            const drawNativeBarChart = (doc, title, dataDict, x, y, primaryColor) => {
+                doc.setFontSize(12);
+                doc.setTextColor(30, 30, 30);
+                doc.text(title, x, y);
+                
+                const entries = Object.entries(dataDict);
+                if (entries.length === 0) return 10;
+                
+                const maxVal = Math.max(...entries.map(e => e[1])) || 1;
+                const maxBarWidth = 35;
+                const barHeight = 6;
+                const gap = 4;
+                let currentY = y + 8;
+                
+                doc.setFontSize(9);
+                entries.forEach(([label, value]) => {
+                    doc.setTextColor(80, 80, 80);
+                    // Truncate long labels to fit left column
+                    const shortLabel = label.length > 26 ? label.substring(0, 24) + "..." : label;
+                    doc.text(shortLabel, x, currentY + 4);
+                    
+                    const barWidth = (value / maxVal) * maxBarWidth;
+                    doc.setFillColor(...primaryColor);
+                    doc.rect(x + 48, currentY, barWidth, barHeight, 'F');
+                    
+                    doc.setTextColor(30, 30, 30);
+                    doc.text(String(value), x + 48 + barWidth + 2, currentY + 4);
+                    
+                    currentY += barHeight + gap;
+                });
+                return currentY - y;
+            };
+            
+            // Add Title
+            doc.setFontSize(22);
+            doc.setTextColor(16, 185, 129); // VerdiTech Green
+            doc.text("VerdiTech Research Summary", 14, 22);
+            
+            // Add Date
+            doc.setFontSize(10);
+            doc.setTextColor(120, 120, 120);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+            
+            // Compute distributions
+            const ageDist = getDistribution(activeData, "age_range");
+            const genderDist = getDistribution(activeData, "sex");
+            const occDist = getDistribution(activeData, "occupation");
+            const expDist = getDistribution(activeData, "gardening_experience");
+            const eduDist = getDistribution(activeData, "educational_attainment");
+
+            // --- Draw Stat Cards ---
+            let cardY = 35;
+            
+            // Card 1: Total
+            doc.setFillColor(16, 185, 129); // Green
+            doc.roundedRect(14, cardY, 55, 25, 3, 3, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text("Total Respondents", 18, cardY + 8);
+            doc.setFontSize(16);
+            doc.text(String(activeData.length), 18, cardY + 18);
+            
+            // Card 2: Students
+            doc.setFillColor(59, 130, 246); // Blue
+            doc.roundedRect(74, cardY, 55, 25, 3, 3, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text("Total Students", 78, cardY + 8);
+            doc.setFontSize(16);
+            doc.text(String(studentCountTxt.textContent), 78, cardY + 18);
+            
+            // Card 3: Experienced
+            doc.setFillColor(245, 158, 11); // Yellow
+            doc.roundedRect(134, cardY, 65, 25, 3, 3, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text("Experienced Gardeners", 138, cardY + 8);
+            doc.setFontSize(16);
+            doc.text(String(gardenerCountTxt.textContent), 138, cardY + 18);
+            
+            // --- Draw Native Charts ---
+            let chartsY = cardY + 35;
+            
+            // Row 1
+            let height1 = drawNativeBarChart(doc, "Age Distribution", ageDist, 14, chartsY, [16, 185, 129]);
+            let height2 = drawNativeBarChart(doc, "Gender Distribution", genderDist, 115, chartsY, [236, 72, 153]);
+            
+            let nextY = chartsY + Math.max(height1, height2) + 10;
+            
+            // Row 2
+            height1 = drawNativeBarChart(doc, "Occupation", occDist, 14, nextY, [59, 130, 246]);
+            height2 = drawNativeBarChart(doc, "Gardening Experience", expDist, 115, nextY, [245, 158, 11]);
+            
+            nextY += Math.max(height1, height2) + 10;
+            
+            // Row 3
+            let finalChartHeight = drawNativeBarChart(doc, "Educational Attainment", eduDist, 14, nextY, [139, 92, 246]);
+            
+            let tableStartY = nextY + finalChartHeight + 15;
+            
+            // Check if table fits on page, else autoTable will handle new page, but we must set startY correctly
+            if (tableStartY > 260) {
+                doc.addPage();
+                tableStartY = 20;
+            }
+            
+            // Add Table
+            const tableData = activeData.map(row => [
+                row.timestamp ? new Date(row.timestamp).toLocaleDateString() : "N/A",
+                row.name || "Anonymous",
+                row.age_range || "Unknown",
+                row.sex || "Unknown",
+                row.occupation || "Unknown",
+                row.gardening_experience || "Unknown"
+            ]);
+            
+            doc.autoTable({
+                startY: tableStartY,
+                head: [['Date', 'Name', 'Age', 'Sex', 'Occupation', 'Experience']],
+                body: tableData,
+                styles: { fontSize: 9 },
+                headStyles: { fillColor: [16, 185, 129] }
+            });
+            
+            doc.save("VerdiTech_Report.pdf");
+        });
     }
 
     // Run first load

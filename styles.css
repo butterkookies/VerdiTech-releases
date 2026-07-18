@@ -71,6 +71,14 @@ body {
 main {
     flex: 1;
     padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#releases-container {
+    width: 100%;
+    max-width: 800px;
 }
 
 .release-card {
@@ -100,6 +108,20 @@ main {
     margin: 0;
     font-size: 1.8rem;
     color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.latest-pill {
+    background-color: #10B981;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .release-date {
