@@ -1,5 +1,15 @@
 [
     {
+        "version": "0.6.4",
+        "date": "2026-07-18",
+        "downloadUrl": "verditech_v0.6.4.apk",
+        "notes": [
+            "Fixed app scaling and responsiveness on tablets and varying screen sizes.",
+            "Restricted bottom sheet maximum widths to 500dp to ensure a clean layout.",
+            "Included layout refinements for the Dashboard and Add/Edit Plant sheets."
+        ]
+    },
+    {
         "version": "0.6.3",
         "date": "2026-07-18",
         "downloadUrl": "verditech_v0.6.3.apk",
