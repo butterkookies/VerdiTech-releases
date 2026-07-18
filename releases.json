@@ -1,12 +1,28 @@
 [
     {
+        "version": "0.6.5",
+        "date": "2026-07-18",
+        "downloadUrl": "verditech_v0.6.5.apk",
+        "notes": [
+            "Fixed CA Simulator timeline slider: scrolling back to Day 0 now correctly shows the seedling stage.",
+            "Scaled down Tomato plant rendering to fit within the simulator container.",
+            "Dashboard grid cards now use a taller 3:4 aspect ratio for better plant art visibility.",
+            "Aligned header and filter chip margins to match the grid layout.",
+            "Refreshed app icon from updated Figma export."
+        ]
+    },
+    {
         "version": "0.6.4",
         "date": "2026-07-18",
         "downloadUrl": "verditech_v0.6.4.apk",
         "notes": [
             "Fixed app scaling and responsiveness on tablets and varying screen sizes.",
             "Restricted bottom sheet maximum widths to 500dp to ensure a clean layout.",
-            "Included layout refinements for the Dashboard and Add/Edit Plant sheets."
+            "Included layout refinements for the Dashboard and Add/Edit Plant sheets.",
+            "Updated CA Simulator visuals: scaled up Siling Labuyo and Tomato fruits for clarity.",
+            "PlantCard layout: health percentage now shown beside the health bar.",
+            "Fixed CA Engine initialization so mature plants start from their logged stage.",
+            "Removed unused Garden View toggle from Profile screen."
         ]
     },
     {
